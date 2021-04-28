@@ -36,3 +36,43 @@
     transform: rotate(360deg);
   }
 }
+
+#wrapper {
+  overflow-x: hidden;
+}
+
+#sidebar-wrapper {
+  width: 30%;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 100%;
+}
+
+.content_wrapper {
+  max-width: 1400px;
+
+  display: flex;
+  justify-content: space-between;
+
+  padding-top: 30px;
+}
+
+.activeCategory {
+  background-color: #b1b0b0 !important;
+}
+
+.table__wrapper {
+  width: 65%;
+}
+
+.table__count {
+  margin-right: 15px;
+}
+
+@import "bootstrap/dist/css/bootstrap.min.css";
