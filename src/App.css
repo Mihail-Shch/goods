@@ -54,6 +54,10 @@
   width: 100%;
 }
 
+.list-group-item:hover {
+  text-decoration: none;
+}
+
 .content_wrapper {
   max-width: 1400px;
 
@@ -73,6 +77,10 @@
 
 .table__count {
   margin-right: 15px;
+}
+
+.table__title {
+  text-align: center;
 }
 
 @import "bootstrap/dist/css/bootstrap.min.css";

@@ -7,12 +7,17 @@ export const fetchData = async () => {
   return resp;
 };
 
-export const sendData = async (el) => {
+export const sendData = async () => {
+  const arr = document.querySelectorAll(".tableChild");
+  const listArray = [].slice.call(arr);
+
   const product = {};
 
-  el.goods.map((g) => (product[g.gid] = keyAbs(g.gquantity)));
+  listArray.map(
+    (row) => (product[row.cells[0].innerText] = row.cells[3].firstChild.value)
+  );
 
-  formData.append(`product${el.rid}`, JSON.stringify(product));
+  formData.append("product", JSON.stringify(product));
 
   const req = await fetch("https://datainlife.ru/junior_task/add_basket.php", {
     method: "POST",
@@ -20,24 +25,26 @@ export const sendData = async (el) => {
   });
 
   const result = await req.json();
+
+  console.log(result);
 };
 
 export const keyAbs = (el) => {
   return Math.round(Math.abs(el));
 };
 
-export const totalPrice = (el) => {
-  return el.goods.reduce(
-    (sum, g) => sum + keyAbs(g.gprice) * keyAbs(g.gquantity),
-    0
-  );
-};
-
 export const itemTotalPrice = (item, quantity) => {
-  console.log("rly?");
   return keyAbs(item.gprice) * quantity;
 };
 
+export const totalPrice = (el) => {
+  let sum = 0;
+  el.map((item) => (sum += Number(item.innerText.slice(0, -3))));
+  return sum;
+};
+
 export const totalCount = (el) => {
-  return el.goods.reduce((sum, g) => sum + keyAbs(g.gquantity), 0);
+  let sum = 0;
+  el.map((item) => (sum += Number(item.value)));
+  return sum;
 };

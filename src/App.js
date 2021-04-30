@@ -1,21 +1,23 @@
 import React from "react";
+import { Route, Switch, useHistory } from "react-router-dom";
+
 import "./App.css";
-
-import TableMain from "./components/TableMain";
-import Navbar from "./components/Navbar";
-
+import { Layout } from "./components";
+import { Home, TableMainCategory } from "./pages";
 import { fetchData } from "./fetch/fetching";
 
 function App() {
   const [goods, setGoods] = React.useState([]);
-  const [activeCategory, setActiveCategory] = React.useState(null);
   const [isLoaded, setIsLoaded] = React.useState(false);
+  const [activeCategory, setActiveCategory] = React.useState(null);
+
+  const history = useHistory();
 
   React.useEffect(() => {
     const getData = async () => {
       setGoods(await fetchData());
-      setActiveCategory(4);
       setIsLoaded(true);
+      history.push("/");
     };
 
     getData();
@@ -26,20 +28,26 @@ function App() {
   };
 
   return (
-    <div>
+    <Layout setCategory={setCategory} titles={goods} category={activeCategory}>
       {isLoaded ? (
-        <div className="container-xl content_wrapper">
-          <Navbar
-            titles={goods}
-            category={activeCategory}
-            setCategory={setCategory}
+        <Switch>
+          <Route
+            path={`/`}
+            render={() => <Home items={goods} category={activeCategory} />}
+            exact
           />
-          <TableMain items={goods} category={activeCategory} />
-        </div>
+          <Route
+            path={`/category/:id`}
+            render={() => (
+              <TableMainCategory items={goods} category={activeCategory} />
+            )}
+            exact
+          />
+        </Switch>
       ) : (
         ""
       )}
-    </div>
+    </Layout>
   );
 }
 
